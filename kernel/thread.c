@@ -1191,6 +1191,7 @@ void z_thread_mark_switched_out(void)
 int k_thread_runtime_stats_get(k_tid_t thread,
 			       k_thread_runtime_stats_t *stats)
 {
+	LOG_ERR("stats = %p (%d)", stats, sizeof(*stats));
 	if ((thread == NULL) || (stats == NULL)) {
 		return -EINVAL;
 	}
@@ -1200,12 +1201,14 @@ int k_thread_runtime_stats_get(k_tid_t thread,
 #else
 	*stats = (k_thread_runtime_stats_t) {};
 #endif
-
 	return 0;
 }
 
 int k_thread_runtime_stats_all_get(k_thread_runtime_stats_t *stats)
 {
+	LOG_ERR("stats = %p (%d)", stats, sizeof(*stats));
+	memset(stats, '\0', 4);
+#if 0
 #ifdef CONFIG_SCHED_THREAD_USAGE_ALL
 	k_thread_runtime_stats_t  tmp_stats;
 #endif
@@ -1234,6 +1237,6 @@ int k_thread_runtime_stats_all_get(k_thread_runtime_stats_t *stats)
 		stats->idle_cycles      += tmp_stats.idle_cycles;
 	}
 #endif
-
+#endif
 	return 0;
 }
