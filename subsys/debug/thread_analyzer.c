@@ -152,11 +152,15 @@ static void isr_stacks(void)
 
 void thread_analyzer_run(thread_analyzer_cb cb)
 {
+#if 0
 	if (IS_ENABLED(CONFIG_THREAD_ANALYZER_RUN_UNLOCKED)) {
 		k_thread_foreach_unlocked(thread_analyze_cb, cb);
 	} else {
 		k_thread_foreach(thread_analyze_cb, cb);
 	}
+#else
+	k_thread_foreach_my_core(thread_analyze_cb, cb);
+#endif
 
 	if (IS_ENABLED(CONFIG_THREAD_ANALYZER_ISR_STACK_USAGE)) {
 		isr_stacks();
