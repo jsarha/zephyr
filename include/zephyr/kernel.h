@@ -119,6 +119,7 @@ typedef void (*k_thread_user_cb_t)(const struct k_thread *thread,
  * threads are blocked until this API returns.
  */
 void k_thread_foreach(k_thread_user_cb_t user_cb, void *user_data);
+void k_thread_foreach_my_core(k_thread_user_cb_t user_cb, void *user_data);
 
 /**
  * @brief Iterate over all the threads in the system without locking.
