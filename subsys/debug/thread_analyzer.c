@@ -111,10 +111,12 @@ static void thread_analyze_cb(const struct k_thread *cthread, void *user_data)
 #ifdef CONFIG_THREAD_RUNTIME_STATS
 	ret = 0;
 
+	LOG_ERR("stats = %p (%d)", &info.usage, sizeof(info.usage));
 	if (k_thread_runtime_stats_get(thread, &info.usage) != 0) {
 		ret++;
 	}
 
+	LOG_ERR("stats = %p (%d)", &rt_stats_all, sizeof(rt_stats_all));
 	if (k_thread_runtime_stats_all_get(&rt_stats_all) != 0) {
 		ret++;
 	}
